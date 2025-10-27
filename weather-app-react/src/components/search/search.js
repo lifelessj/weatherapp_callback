@@ -1,22 +1,31 @@
 import { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
+import { GEO_API_URL, geoApiOptions } from "../../api";
 
 const Search = ({ onSearchChange }) => {
-    const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState(null);
 
-    const loadOptions = (inputValue) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve([
-            { value: "New York", label: "New York" },
-            { value: "Los Angeles", label: "Los Angeles" },
-            { value: "Chicago", label: "Chicago" },
-          ]);
-        }, 1000);
+  const loadOptions = (inputValue) => {
+    return fetch(
+      `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
+      geoApiOptions
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        return {
+          options: response.data.map((city) => ({
+            value: city.id,
+            label: city.name,
+          })),
+        };
+      })
+      .catch((error) => {
+        console.error("Error fetching city data:", error);
+        return { options: [] };
       });
-    };
+  };
 
-    const handleOnChange = (searchData) => {
+  const handleOnChange = (searchData) => {
     setSearch(searchData);
     if (onSearchChange) {
       onSearchChange(searchData);
@@ -32,7 +41,5 @@ const Search = ({ onSearchChange }) => {
       loadOptions={loadOptions}
     />
   );
-}
-
+};
 export default Search;
-
