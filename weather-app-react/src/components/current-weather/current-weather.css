@@ -2,13 +2,17 @@
   display: flex;
   font-size: 18px;
   font-weight: 500;
-  width: 60%;
+  width: 70%;
   border-radius: 6px;
   color: #efefef;
   background-color: #171616;
   margin: 20px auto;
   box-shadow: 20px 10px 20px rgba(0, 0, 0, 0.3);
   padding: 0 20px 20px 20px;
+}
+.weather:hover {
+  box-shadow: 20px 10px 30px rgba(0, 0, 0, 0.5);
+  transform: translateY(-5px);
 }
 
 .current-weather {
