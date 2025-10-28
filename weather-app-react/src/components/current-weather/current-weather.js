@@ -6,20 +6,29 @@ const CurrentWeather = ({ data }) => {
       <div className="current-weather">
         <div className="weather-info">
           <h2 className="city">{data.city}</h2>
-          <p className="temperature">{data.temperature}°C</p>
-          <p className="description">{data.description}</p>
+          <p className="temperature">{Math.round(data.main.temp)}°C</p>
+          <p className="description">{data.weather[0].description}</p>
         </div>
         <img
           className="weather-icon"
-          src="icons/01d.png"
-          alt={data.description}
+          src={`icons/${data.weather[0].icon}.png`}
+          alt={data.weather[0].description}
         />
       </div>
       <div className="weather-details">
-        <p className="humidity">Humidity: {data.humidity}%</p>
-        <p className="wind-speed">Wind Speed: {data.windSpeed} m/s</p>
-        <div>
-            <span className="label">Its a {data.description} weather</span>
+        <div className="weather-humidity">
+          <span className="humidity">Humidity: {data.main.humidity}%</span>
+        </div>
+        <div className="weather-pressure">
+          <span className="pressure">Pressure: {data.main.pressure} hPa</span>
+        </div>
+        <div className="weather-wind-speed">
+          <span className="wind-speed">Wind Speed: {data.wind.speed} m/s</span>
+        </div>
+        <div className="weather-description">
+          <span className="label">
+            Its a {data.weather[0].description} weather
+          </span>
         </div>
       </div>
     </div>
